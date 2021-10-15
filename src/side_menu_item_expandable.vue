@@ -82,12 +82,12 @@ module.exports = {
   methods: {
     parentClicked () {
       this.isCollapsed = !this.isCollapsed;
-      this.$emit("update:isActive",false);
-      //this.$emit("sideMenuExpandable:click",this.keyName);
+      //this.$emit("update:isActive",false);
+      this.$emit("sideMenuExpandable:click",this.keyName);
     },
     childClicked (activeChild) {
       this.sideMenuItems.setActiveItem(activeChild);
-     //this.$emit("sideMenuExpandable_child:click",activeChild);
+     this.$emit("sideMenuExpandable_child:click",activeChild);
     },
   },
   components: {

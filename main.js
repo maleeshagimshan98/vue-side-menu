@@ -1,20 +1,36 @@
 import Vue from "vue/dist/vue.js";
 import sideMenu from "./src/side_menu.vue";
-import sideMenuItem from "./src/js/sideMenuItem.js";
+import sideMenuData from "./src/js/sideMenuData.js";
+import sideMenuStyles from "./src/js/sideMenuStyles.js";
 
-let profile = new sideMenuItem("profile","Profile");
-let requests = new sideMenuItem("request","Requests").setChildren([
-    new sideMenuItem("hire","Hire"),
-    new sideMenuItem("rent","Rent")
-]);
+let styles =  new sideMenuStyles();
+//let testStyle = new sideMenuStyles("bg-primary","bg-warning");
+let data = new sideMenuData(
+    [
+        {
+            name :"Profile",
+            //style : testStyle
+        },
+        {
+            name : "Requests",
+            children : [
+                {
+                    name : "Hire",
+                    //style : testStyle
+                },
+                {
+                    name : "Rental"
+                }
+            ]
+        }
+    ],
+    styles
+);
 
 const test = new Vue({
     el : "#test",
     data : {
-        items : [
-            profile, 
-            requests,
-        ]
+        items : data.getItems()
     },
     methods : {},
     components : {

@@ -39,7 +39,6 @@
 
 <script>
 const sideMenuHeader = require("./side_menu_header.vue").default;
-const sideMenuItem = require("./side_menu_item.vue").default;
 const sideMenuItemExpandable = require("./side_menu_item_expandable.vue").default;
 const sideMenuActiveItemTracker = require("./js/sideMenuActiveItemTracker.js");
 

@@ -10,14 +10,15 @@ class sideMenuItem {
      * 
      * @param {string} key
      * @param {string} name
+     * @param {object} styles
      * @returns {self} 
      */
-    constructor (key,name)
+    constructor (key,name,styles)
     {
         this.key = key;
         this.name = name;        
         this.children = null;        
-        this.styles = this.getDefaultStyle();        
+        this.styles = styles;        
     }
 
     /**
@@ -50,51 +51,18 @@ class sideMenuItem {
     getStyles ()
     {
         return this.styles;
-    }
-
-    /**
-     * get default stylings for the custom input
-     * 
-     * @returns {object}
-     */
-    getDefaultStyle ()
-    {
-       return {
-            bgActive : "bg-dark",
-            bgInactive : "bg-white",
-            active : 'text-white',
-            inactive : 'text-secondary',
-            color : 'black',
-            font : '',
-          };
-    }
+    }    
 
     /**
      * set styles,
      * if any of property is not set, set it to default
      * 
-     *  @param {string} bgActive active state's backgound color - class name
-     *  @param {string} bgInactive inactive state's backgound color - class name
-     * @param {string} active  active state's text color - class name
-     * @param {string} inactive active state's text color - class name
-     * @param {string} font  font name
+     *  @param {object} styles - style object
      * @returns 
      */
-    setStyles (bgActive=null,bgInactive=null,active=null,inactive=null,font=null)
+    setStyles (styles)
     {
-        if (!bgActive && !bgInactive&& !active && !inactive && !color && !font) {
-            this.styles = this.getDefaultStyle();
-        }
-        else {
-            this.styles = {
-                bgActive : bgActive??'bg-dark',
-                bgInactive : bgInactive??'bg-white',
-                active : active??'text-white',
-                inactive : inactive??'text-secondary',
-                color : color??'black',
-                font : font??'',
-              };
-        }
+        this.styles = styles;
         return this;
     }
 }
