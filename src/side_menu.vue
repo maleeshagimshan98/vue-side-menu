@@ -5,7 +5,7 @@
 
 <template>
   <div
-    class="container-fluid d-flex flex-column justify-content-between p-0"
+    class="container-fluid d-flex flex-column justify-content-between p-0 shadow"
   >
     <side-menu-header
     class="my-3"
@@ -16,16 +16,16 @@
     <!-- header content -->
     <slot v-if="!items" :name="'header'"/>
 
-    <div class="d-flex flex-column my-3 p-0">
+    <div class="d-flex flex-column my-3 px-2">
       <!-- main content -->
-      <side-menu-item-expandable class="my-2"
+      <side-menu-item-expandable class="my-0"
       v-for="(item,name,index) in items"
       :key="index"
       :name="item.name"
       :keyName="item.key"
       :children="item.children"
       :styles="item.styles"
-      :isActive="activeItem.items[item.key]"
+      :isActive.sync="activeItem.items[item.key]"
       v-on:sideMenuExpandable:click="val => itemClicked(val)"/>
       <slot v-if="!items" :name="'content'"/>
     </div>
@@ -74,6 +74,10 @@ module.exports = {
   },
   methods: {
     itemClicked (activeItem) {
+      if (!activeItem) {
+        this.activeItem.resetActiveItems();
+        return;
+      }
       this.activeItem.setActiveItem(activeItem);      
     },
     view: function(path, activeItem = null, params) {
@@ -81,18 +85,7 @@ module.exports = {
       this.$emit("sidemenu:close");
       params = params || {};
       this.$router.push({ name: path, params: params });
-    },
-    facebook: function() {
-      //... this.contact.facebook
-      //... open facebook link
-    },
-    mail: function() {
-      //... this.contact.email
-      //... open mail link
-    },
-    logOut: function() {
-      //... logout function
-    },
+    },    
   },
   computed: {
     sideMenuItemNames () {

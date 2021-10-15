@@ -10,7 +10,7 @@ class sideMenuItem {
      * 
      * @param {string} key
      * @param {string} name
-     * @returns {sideMenuItem} 
+     * @returns {self} 
      */
     constructor (key,name)
     {

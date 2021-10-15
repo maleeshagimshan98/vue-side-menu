@@ -60,6 +60,18 @@ class sideMenuActiveItemTracker {
             }
         }
     }
+
+    /**
+     * reset active status of all items
+     * 
+     * @returns void
+     */
+    resetActiveItems ()
+    {
+        for(let item in this.items) {            
+            this.items[item] = false;            
+        }
+    }
 }
 
 module.exports = sideMenuActiveItemTracker;

@@ -9,14 +9,13 @@ class sideMenuStyles {
      * 
      * @param {string} active 
      * @param {string} inactive 
-     * @param {string} color 
      * @param {string} font 
      * @returns {sideMenuStyles} 
      */
-    constructor (bgActive=null, bgInactive=null,active=null ,inactive=null ,color = null ,font= null)
+    constructor (bgActive=null, bgInactive=null,active=null ,inactive=null ,font= null)
     {
         this.styles = {};
-        if (!bgActive && !bgInactive&& !active && !inactive && !color && !font) {
+        if (!bgActive && !bgInactive&& !active && !inactive && !font) {
             this.styles = this.getDefaultStyle();
         }
         else {

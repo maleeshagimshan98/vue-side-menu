@@ -5,7 +5,7 @@
 
 <template>
   <div class="d-flex justify-content-start text-center px-2" v-bind:class="[isActive ? [bgActive, active] : [bgInactive, inactive]]" v-on:click="clicked()">    
-      <h4 class="m-0" v-bind:style="{'font-family' : font}">{{ itemName }}</h4>
+      <h4 class="my-2" v-bind:style="{'font-family' : font}">{{ itemName }}</h4>
   </div>
 </template>
 

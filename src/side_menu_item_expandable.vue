@@ -16,9 +16,9 @@
     :isActive="isActive" />
     
     <!-- child items -->
-    <div v-if="!isCollapsed && children">
-      <div class="py-2 pl-2" >
-        <side-menu-item class="my-2" v-for="(child, name, index) in children" :key="index" 
+    <div v-if="isCollapsed && children">
+      <div class="">
+        <side-menu-item class="p-0 px-4" v-for="(child, name, index) in children" :key="index" 
         :bgActive="child.styles.bgActive"
         :bgInactive="child.styles.bgInactive"
         :active="child.styles.active"
@@ -69,23 +69,25 @@ module.exports = {
       default : false,
     },
   },
-  computed : {
-    childrenNames () {
-      let names = [];
-      this.children.forEach(child => {
-        names.push(child.item.key);
-      });
-      return names;
-    },
+  watch : {
+    isActive () {
+      if(!this.isActive && this.children) {
+        this.sideMenuItems.resetActiveItems();
+        this.isCollapsed = false;
+      };
+    }
+  },
+  computed : {    
   },
   methods: {
     parentClicked () {
       this.isCollapsed = !this.isCollapsed;
-      this.$emit("sideMenuExpandable:click",this.keyName);
+      this.$emit("update:isActive",false);
+      //this.$emit("sideMenuExpandable:click",this.keyName);
     },
     childClicked (activeChild) {
       this.sideMenuItems.setActiveItem(activeChild);
-      this.$emit("sideMenuExpandable_child:click",activeChild);
+     //this.$emit("sideMenuExpandable_child:click",activeChild);
     },
   },
   components: {
