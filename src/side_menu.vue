@@ -1,103 +1,114 @@
-﻿/**
- * © Maleesha Gimshan - 2021 - github.com/maleeshagimshan98
- * Side menu component
- */
+﻿/** 
+  * © Maleesha Gimshan - 2023 - github.com/maleeshagimshan98
+  * Side menu component 
+  */
 
 <template>
-  <div
-    class="container-fluid d-flex flex-column justify-content-between p-0 shadow"
-  >
-    <side-menu-header
-    class="my-3"
-      :name="name"
-      v-on:side_menu_header:close="$emit('sidemenu:close')"
-    ></side-menu-header>
-    
+  <div class="sidemenu" v-bind:class="[isOpen ? 'open' : 'closed-left']">
     <!-- header content -->
-    <slot v-if="!items" :name="'header'"/>
+    <slot :name="'header'"> </slot>
 
-    <div class="d-flex flex-column my-3 px-2">
-      <!-- main content -->
-      <side-menu-item-expandable class="my-0"
-      v-for="(item,name,index) in items"
-      :key="index"
-      :name="item.name"
-      :keyName="item.key"
-      :children="item.children"
-      :styles="item.styles"
-      :isActive.sync="activeItem.items[item.key]"
-      v-on:sideMenuExpandable:click="val => itemClicked(val)"/>
-      <slot v-if="!items" :name="'content'"/>
-    </div>
+    <!-- main content -->
+    <slot name="content">
+      <div class="content">
+        <!-- make scrollable, hide scroll bar -->
+        <SideMenuItem
+          v-for="(item, name, index) in state.getMenuItems()"          
+          :routeName="item.routeName"
+          :path="item.path"
+          :params="item.params"
+          :title="item.title"
+          :key="item.key"
+          :isActive="item.isActive"
+          :children="item.children"
+          :bgActive="item.styles.bgActive"
+          :bgHover="item.styles.bgHover"
+          :bgInactive="item.styles.bgInactive"
+          :textActive="item.styles.textActive"
+          :textHover="item.styles.textHover"
+          :textInactive="item.styles.textInactive"
+          :font="item.styles.font"
+          @sidemenu:navigate="close()"
+          >
+        </SideMenuItem>
+      </div>
+    </slot>
 
-    <div class="my-3 p-0">
-      <!-- footer content -->
-      <slot :name="'footer'"/>
-    </div>    
+    <!-- footer content -->
+    <slot :name="'footer'"> </slot>
   </div>
 </template>
 
 <script>
-const sideMenuHeader = require("./side_menu_header.vue").default;
-const sideMenuItemExpandable = require("./side_menu_item_expandable.vue").default;
-const sideMenuActiveItemTracker = require("./js/sideMenuActiveItemTracker.js");
+import SideMenuItem from "./side_menu_item.vue"
+import SideMenuState from "./js/SideMenuState.js"
 
-module.exports = {
-  data: function() {
-    names = [];
-    this.items.forEach(item => {
-        names.push(item.key);
-    });
+export default {
+  data: function () {
     return {
-      left: "-100%",
-      logo: "",
-      activeItem: new sideMenuActiveItemTracker(names),
-    };
+      state: new SideMenuState(this.items),
+    }
   },
   props: {
-    bg : {
-      type :String,
-      default : "bg-white"
+    isOpen: {
+      type: Boolean,
+      default: false,
     },
-    items : {
-      type : Array
+    closeWhenNavigating : {
+      type : Boolean,
+      default : true
     },
-    logos: {
-      type: String,
-      default: "",
+    items: {
+      type: Object,
     },
-    name: {
-      type: String,
-      default: "",
-    },    
+    styles: {
+      type: Object,
+    },
   },
   methods: {
-    itemClicked (activeItem) {
-      if (!activeItem) {
-        this.activeItem.resetActiveItems();
-        return;
-      }
-      this.activeItem.setActiveItem(activeItem);      
+    itemClicked(activeItem) {
+      
     },
-    view: function(path, activeItem = null, params) {
-      this.activeItem.setActiveItem(activeItem);
-      this.$emit("sidemenu:close");
-      params = params || {};
-      this.$router.push({ name: path, params: params });
-    },    
+    close () {
+
+    },
+    view: function (path, activeItem = null, params) {      
+      this.$emit("sidemenu:close")
+      params = params || {}
+      this.$router.push({ name: path, params: params })
+    },
   },
-  computed: {
-    sideMenuItemNames () {
-      names = [];
-      this.items.forEach(item => {
-        names.push(item.key);
-      });
-      return names;
-    },    
+  computed: {    
   },
   components: {
-    sideMenuHeader: sideMenuHeader,
-    sideMenuItemExpandable: sideMenuItemExpandable,
+    SideMenuItem,
   },
-};
+}
 </script>
+
+<style>
+.sidemenu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 110;
+  /** this side menu sits above the app bar */
+}
+
+.sidemenu.closed-left {
+  left: -20vw;
+}
+
+.sidemenu.closed-right {
+  right: -20vw;
+}
+
+.sidemenu.open {
+  left: 20vw;
+}
+
+.sidemenu .content {
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+</style>

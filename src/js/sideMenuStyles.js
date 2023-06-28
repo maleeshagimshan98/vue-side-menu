@@ -3,27 +3,17 @@
  * Side menu styles
  */
 
-class sideMenuStyles {
+class SideMenuStyles {
     
     /**
      * constructor
      * 
-     * @param {string} bgActive
-     * @param {string} bgInactive
-     * @param {string} active 
-     * @param {string} inactive 
-     * @param {string} font 
+     * @param {Object}
      * @returns {sideMenuStyles} 
      */
-    constructor (bgActive=null, bgInactive=null,active=null ,inactive=null ,font=null)
+    constructor ({bgActive="", bgHover="", bgInactive="", textActive="", textHover="", textInactive="" ,font=""})
     {
-        
-        if (!bgActive && !bgInactive&& !active && !inactive && !font) {
-            this.setDefaultStyles();
-        }
-        else {
-            this.setStyles(bgActive,bgInactive,active,inactive,font);
-        }
+        this.setStyles({bgActive, bgHover, bgInactive, textActive, textHover, textInactive, font})        
     }
 
     /**
@@ -35,35 +25,13 @@ class sideMenuStyles {
     {
         return {
             bgActive : this.bgActive,
+            bgHover : this.bgHover,
             bgInactive : this.bgInactive,
-            active : this.active,
-            inactive : this.inactive,
+            textActive : this.textActive,
+            textHover : this.textHover,
+            textInactive : this.textInactive,
             font : this.font,
           }
-    }
-
-    /**
-     * get default stylings for the custom input
-     * 
-     * @returns {object}
-     */
-    getDefaultStyle ()
-    {
-       return this.defaultStyles;
-    }
-
-    /**
-     * set default styles
-     * 
-     * @returns void
-     */
-    setDefaultStyles ()
-    {        
-        this.bgActive = "bg-dark";
-        this.bgInactive = "bg-white";
-        this.active = 'text-white';
-        this.inactive = 'text-secondary';
-        this.font = '';        
     }
 
     /**
@@ -72,20 +40,21 @@ class sideMenuStyles {
      * 
      * @param {string} bgActive
      * @param {string} bgInactive
-     * @param {string} active 
-     * @param {string} inactive 
+     * @param {string} textActive 
+     * @param {string} textInactive 
      * @param {string} font 
      * @returns {object} 
      */
-    setStyles (bgActive,bgInactive,active,inactive,font)
-    {
-        let previous = this.getStyles();        
-        this.bgActive = bgActive??previous.bgActive;
-        this.bgInactive = bgInactive??previousbgInactive;
-        this.active = active??previous.active;
-        this.inactive = inactive??previous.inactive;
-        this.font = font??previous.font;
+    setStyles ({bgActive,bgHover, bgInactive,textActive, textHover, textInactive,font})
+    {         
+        this.bgActive = bgActive
+        this.bgHover = bgHover
+        this.bgInactive = bgInactive
+        this.textActive = textActive
+        this.textHover = textHover
+        this.textInactive = textInactive
+        this.font = font
     }
 }
 
-module.exports = sideMenuStyles;
+export default SideMenuStyles;
